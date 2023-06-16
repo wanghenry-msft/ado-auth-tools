@@ -1,0 +1,45 @@
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+  ci:
+    # TODO: Matrix
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Setup Node.js
+      uses: actions/setup-node@master
+      with:
+        node-version: 'latest'
+        cache: 'npm'
+        cache-dependency-path: '**/package-lock.json'
+    - run: npm ci
+      working-directory: cargoinstalltask
+
+    - name: Compile typescript
+      run: tsc
+      working-directory: Tasks/AADAccessTokenAuth
+    
+    - name: Install mocha
+      run: npm i mocha -g
+    - name: Run tests
+      run: mocha tests/_suite.js
+      working-directory: Tasks/AADAccessTokenAuth
+      env:
+        TASK_TEST_TRACE: '1'
+
+    - name: Install tfx CLI
+      run: npm i -g tfx-cli
+    - name: Package extension
+      id: "package"
+      shell: pwsh
+      run: |
+        $res = tfx extension create --manifest-globs ./vss-extension.json --json | ConvertFrom-Json
+        Write-Output "vsix_path=$($res.path)" >> $env:GITHUB_OUTPUT
+    - name: Upload extension
+      uses: actions/upload-artifact@v2.2.4
+      with:
+        name: ado-authtasks-vsix
+        path: ${{ steps.package.outputs.vsix_path }}

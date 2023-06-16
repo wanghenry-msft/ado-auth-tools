@@ -1,0 +1,36 @@
+{
+    "manifestVersion": 1,
+    "id": "ado-auth-tools",
+    "name": "ADO Authentication Tools",
+    "version": "0.1.0",
+    "publisher": "MORSE",
+    "targets": [
+        {
+            "id": "Microsoft.VisualStudio.Services"
+        }
+    ],
+    "description": "Tools for Rust support in ADO",
+    "categories": [
+        "Azure Pipelines"
+    ],
+    "icons": {
+        "default": "images/extension-icon.png"
+    },
+    "files": [
+        {
+            "path": "Tasks/AADAccessTokenAuth"
+        }
+    ],
+    "contributions": [
+        {
+            "id": "aad-accesstoken-auth-task",
+            "type": "ms.vss-distributed-task.task",
+            "targets": [
+                "ms.vss-distributed-task.tasks"
+            ],
+            "properties": {
+                "name": "Tasks/AADAccessTokenAuth"
+            }
+        }
+    ]
+}
