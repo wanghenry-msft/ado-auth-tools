@@ -17,7 +17,7 @@ steps:
   displayName: Run tests
 - powershell: |
     $res = tfx extension create --manifest-globs ./vss-extension.json --json | ConvertFrom-Json
-    cp $res $(Build.ArtifactStagingDirectory)
+    cp $res.path $(Build.ArtifactStagingDirectory)
   displayName: 'Creating extension package'
 - publish: $(Build.ArtifactStagingDirectory)
   artifact: extension
