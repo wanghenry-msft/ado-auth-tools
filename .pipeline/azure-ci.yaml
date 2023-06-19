@@ -1,0 +1,23 @@
+trigger:
+- main
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+- bash: ./foreach yarn install --non-interactive
+  displayName: Installing dependencies
+- bash: ./foreach yarn tsc
+  displayName: Compile typescript
+- bash: npm i mocha -g
+  displayName: Install mocha
+- bash: npm i -g tfx-cli
+  displayName: Install tfx CLI
+- powershell: |
+    $res = tfx extension create --manifest-globs ./vss-extension.json --json | ConvertFrom-Json
+    cp $res $(Build.ArtifactsStagingDirectory)
+  displayName: 'Creating extension package'
+- publish: $(Build.ArtifactsStagingDirectory)
+  artifact: extension
+  displayName: 'Publish extension file to ADO pipeline storage'
+    Write-Output "vsix_path=$($res.path)" >> $env:GITHUB_OUTPUT
