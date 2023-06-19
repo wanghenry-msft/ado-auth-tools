@@ -234,3 +234,5 @@ export class Task {
     }
   }
 }
+
+Task.runMain();
