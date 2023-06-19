@@ -13,10 +13,12 @@ steps:
   displayName: Install mocha
 - bash: npm i -g tfx-cli
   displayName: Install tfx CLI
+- bash: ./foreach mocha tests/_suite.js
+  displayName: Run tests
 - powershell: |
     $res = tfx extension create --manifest-globs ./vss-extension.json --json | ConvertFrom-Json
-    cp $res $(Build.ArtifactsStagingDirectory)
+    cp $res $(Build.ArtifactStagingDirectory)
   displayName: 'Creating extension package'
-- publish: $(Build.ArtifactsStagingDirectory)
+- publish: $(Build.ArtifactStagingDirectory)
   artifact: extension
   displayName: 'Publish extension file to ADO pipeline storage'
