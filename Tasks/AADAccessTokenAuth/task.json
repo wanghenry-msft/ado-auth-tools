@@ -1,26 +1,47 @@
 {
     "$schema": "https://raw.githubusercontent.com/Microsoft/azure-pipelines-task-lib/master/tasks.schema.json",
     "id": "e8a5e063-cc6b-494d-a8fe-3ca4c1510787",
-    "name": "CargoInstall",
-    "friendlyName": "Cargo Install",
-    "description": "Cargo Install for ADO",
+    "name": "AADAccessTokenAuth",
+    "friendlyName": "AAD to ADO Access Token",
+    "description": "Uses AAD to fetch an access token for ADO",
     "helpMarkDown": "",
     "category": "Utility",
-    "author": "Justin Moore <jusmoore@microsoft.com>",
+    "author": "Henry Wang <wanghenry@microsoft.com>",
     "version": {
         "Major": 1,
         "Minor": 0,
-        "Patch": 0
+        "Patch": 1
     },
-    "instanceNameFormat": "Install Cargo package $(crate)",
+    "instanceNameFormat": "AAD to ADO Access Token via $(connectedServiceNameARM)",
     "inputs": [
         {
-            "name": "crates",
-            "type": "string",
-            "label": "Crates to install",
-            "defaultValue": "",
+            "name": "connectedServiceNameARM",
+            "type": "connectedService:AzureRM",
+            "label": "Azure Resource Manager connection",
+            "aliases": [ "azureSubscription" ],
             "required": true,
-            "helpMarkDown": "The Cargo crates to install, delimited by commas"
+            "helpMarkDown": "Select an Azure Resource Manager service connection for the deployment",
+            "properties": {
+                "EndpointFilterRule": ""
+            }
+        },
+
+        {
+            "name": "tokenOutputVariable",
+            "type": "string",
+            "label": "Token output variable",
+            "helpMarkDown": "Select the variable to output the access token into",
+            "required": true
+        },
+
+        {
+            "name": "useGlobalConfig",
+            "type": "boolean",
+            "label": "Use global Azure CLI configuration",
+            "defaultValue": "false",
+            "required": false,
+            "helpMarkDown": "If this is false, this task will use its own separate [Azure CLI configuration directory](https://docs.microsoft.com/en-us/cli/azure/azure-cli-configuration?view=azure-cli-latest#cli-configuration-file). This can be used to run Azure CLI tasks in *parallel* releases",
+            "groupName": "advanced"
         }
     ],
     "execution": {

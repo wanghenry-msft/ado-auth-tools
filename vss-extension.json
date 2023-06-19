@@ -2,8 +2,8 @@
     "manifestVersion": 1,
     "id": "ado-auth-tools",
     "name": "ADO Authentication Tools",
-    "version": "0.1.0",
-    "publisher": "MORSE",
+    "version": "0.1.1",
+    "publisher": "MSFT-MORSE",
     "targets": [
         {
             "id": "Microsoft.VisualStudio.Services"
