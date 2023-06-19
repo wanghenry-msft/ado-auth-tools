@@ -24,7 +24,9 @@ abstract class AuthMethod {
   abstract fetchAuthToken(): Promise<string>;
 
   protected fetchAdoAuthTokenFromAzCli(): string {
-    let res = tl.execSync('az', ['account', 'get-access-token', '--scope', '499b84ac-1321-427f-aa17-267ca6975798/.default']);
+    let res = tl.execSync('az', ['account', 'get-access-token', '--scope', '499b84ac-1321-427f-aa17-267ca6975798/.default'], {
+      silent: true,
+    });
     throwIfErr(res);
     return JSON.parse(res.stdout)['accessToken'];
   }
