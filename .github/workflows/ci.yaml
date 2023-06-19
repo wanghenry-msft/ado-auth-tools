@@ -13,8 +13,8 @@ jobs:
       uses: actions/setup-node@master
       with:
         node-version: 'latest'
-        cache: 'npm'
-        cache-dependency-path: '**/package-lock.json,**/yarn.lock'
+        cache: 'yarn'
+        cache-dependency-path: '**/yarn.lock'
     - name: Installing dependencies
       run: ./foreach yarn install --non-interactive
     - name: Compile typescript
