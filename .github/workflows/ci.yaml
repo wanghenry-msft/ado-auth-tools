@@ -16,7 +16,7 @@ jobs:
         cache: 'npm'
         cache-dependency-path: '**/package-lock.json'
     - run: npm ci
-      working-directory: cargoinstalltask
+      working-directory: Tasks/AADAccessTokenAuth
 
     - name: Compile typescript
       run: tsc
