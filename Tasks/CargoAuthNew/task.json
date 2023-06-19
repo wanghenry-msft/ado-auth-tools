@@ -1,0 +1,64 @@
+{
+    "$schema": "https://raw.githubusercontent.com/Microsoft/azure-pipelines-task-lib/master/tasks.schema.json",
+    "id": "4fed73ac-0ce7-11ee-aa6a-53031587b50c",
+    "name": "CargoAuthNew",
+    "friendlyName": "New cargo authenticator",
+    "description": "Uses external/system access tokens to authenticate to cargo",
+    "helpMarkDown": "",
+    "category": "Utility",
+    "author": "Henry Wang <wanghenry@microsoft.com>",
+    "version": {
+        "Major": 1,
+        "Minor": 0,
+        "Patch": 1
+    },
+    "instanceNameFormat": "Authenticate cargo",
+    "inputs": [
+        {
+            "name": "configFile",
+            "type": "string",
+            "label": "cargo config file",
+            "aliases": [ "azureSubscription" ],
+            "defaultValue": "",
+            "required": false,
+            "helpMarkDown": "Specify a override path to cargo config; otherwise, the default in the current build source directory will be used"
+        },
+        {
+            "name": "externalAuthToken",
+            "type": "string",
+            "label": "Authentication token for external registries",
+            "helpMarkDown": "This may be omitted if you know that there are no external registries that need to be authenticated. Otherwise, when omitted, any registries that aren't in our own organization will not be authenticated.",
+            "required": false
+        },
+        {
+            "name": "externalOrganizations",
+            "type": "string",
+            "label": "External organization list",
+            "required": false,
+            "helpMarkDown": "Comma-delimited list of external organizations that should be authenticated using our externalAuthToken. Any organizations not listed here will not be authenticated",
+            "groupName": "advanced"
+        },
+        {
+            "name": "internalOrganization",
+            "type": "string",
+            "label": "Internal organization",
+            "required": false,
+            "helpMarkDown": "The organization that should be denoted as the 'internal' organization, i.e. should use the system access token by default.",
+            "groupName": "advanced"
+        },
+
+        {
+            "name": "ignoreOrganizations",
+            "type": "string",
+            "label": "Ignore organization list",
+            "required": false,
+            "helpMarkDown": "Comma-delimited list of organizations that should not be authenticated to at all. This also suppresses warnings for these organization if we weren't normally able to authenticate to it due to the external* inputs",
+            "groupName": "advanced"
+        }
+    ],
+    "execution": {
+        "Node": {
+            "target": "index.js"
+        }
+    }
+}

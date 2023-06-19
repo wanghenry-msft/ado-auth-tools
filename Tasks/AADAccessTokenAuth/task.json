@@ -1,6 +1,6 @@
 {
     "$schema": "https://raw.githubusercontent.com/Microsoft/azure-pipelines-task-lib/master/tasks.schema.json",
-    "id": "e8a5e063-cc6b-494d-a8fe-3ca4c1510787",
+    "id": "50bb272a-0ce7-11ee-b5be-6370435bd1b8",
     "name": "AADAccessTokenAuth",
     "friendlyName": "AAD to ADO Access Token",
     "description": "Uses AAD to fetch an access token for ADO",
@@ -10,7 +10,7 @@
     "version": {
         "Major": 1,
         "Minor": 0,
-        "Patch": 4
+        "Patch": 5
     },
     "instanceNameFormat": "AAD to ADO Access Token via $(connectedServiceNameARM)",
     "inputs": [

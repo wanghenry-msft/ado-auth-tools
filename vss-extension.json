@@ -2,7 +2,7 @@
     "manifestVersion": 1,
     "id": "ado-auth-tools",
     "name": "ADO Authentication Tools",
-    "version": "0.1.4",
+    "version": "0.1.6",
     "publisher": "MSFT-MORSE",
     "targets": [
         {
@@ -19,6 +19,9 @@
     "files": [
         {
             "path": "Tasks/AADAccessTokenAuth"
+        },
+        {
+            "path": "Tasks/CargoAuthNew"
         }
     ],
     "contributions": [
@@ -30,6 +33,16 @@
             ],
             "properties": {
                 "name": "Tasks/AADAccessTokenAuth"
+            }
+        },
+        {
+            "id": "cargo-accesstoken-auth-task",
+            "type": "ms.vss-distributed-task.task",
+            "targets": [
+                "ms.vss-distributed-task.tasks"
+            ],
+            "properties": {
+                "name": "Tasks/CargoAuthNew"
             }
         }
     ]

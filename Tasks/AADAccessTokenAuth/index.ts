@@ -210,7 +210,7 @@ class Auth {
 
 export class Task {
   public static async runMain(): Promise<void> {
-    let toolExecutionError: Auth | undefined = undefined;
+    let toolExecutionError: string | undefined = undefined;
     let auth: Auth | undefined = undefined;
     let tokenOutputVariable: string | undefined = undefined;
     try {

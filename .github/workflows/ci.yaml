@@ -15,21 +15,16 @@ jobs:
         node-version: 'latest'
         cache: 'npm'
         cache-dependency-path: '**/package-lock.json'
-    - run: npm ci
-      working-directory: Tasks/AADAccessTokenAuth
-
+    - name: Installing dependencies
+      run: ./foreach yarn install --non-interactive
     - name: Compile typescript
-      run: tsc
-      working-directory: Tasks/AADAccessTokenAuth
-    
+      run: ./foreach yarn tsc
     - name: Install mocha
       run: npm i mocha -g
     - name: Run tests
-      run: mocha tests/_suite.js
-      working-directory: Tasks/AADAccessTokenAuth
+      run: ./foreach mocha tests/_suite.js
       env:
         TASK_TEST_TRACE: '1'
-
     - name: Install tfx CLI
       run: npm i -g tfx-cli
     - name: Package extension
