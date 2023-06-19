@@ -2,6 +2,7 @@ import fs = require('fs');
 import path = require('path');
 import tl = require('azure-pipelines-task-lib/task');
 
+import { URL } from 'url';
 import { getSystemAccessToken } from 'azure-pipelines-tasks-artifacts-common/webapi';
 import { IExecSyncResult } from 'azure-pipelines-task-lib/toolrunner';
 
@@ -42,7 +43,7 @@ function extractOrgName(url: string): string {
     return urlParts.pathname.split('/')[0].toLowerCase();
   } else if (urlParts.hostname.endsWith('visualstudio.com')) {
     let domainParts = urlParts.hostname.split('.');
-    if (domainParts.length === 3) {
+    if (domainParts.length >= 3) {
       return domainParts[0].toLowerCase();
     }
   }
@@ -58,6 +59,12 @@ export class Task {
       const configFile = tl.getInput('configFile') ||
         path.join(tl.getTaskVariable('Build.SourcesDirectory') || '',
           '.cargo', 'config.toml');
+      if (path.basename(configFile) !== 'config.toml') {
+        throw `configFile should match the pattern **/config.toml`;
+      }
+      const configDir = path.dirname(configFile)
+      process.env['CARGO_HOME'] = configDir;
+      tl.setVariable('CARGO_HOME', configDir);
 
       const res = parseToml<RustConfig>(fs.readFileSync(configFile).toString());
       if (!res.ok) {
@@ -76,6 +83,7 @@ export class Task {
       }
 
       const delimiter = /\s*,\s*/;
+      const useNightly = tl.getBoolInput('nightly');
       const ourOrg = tl.getInput('internalOrganization') ||
         extractOrgName(tl.getVariable('System.CollectionUri') || '');
       const extnAuth = tl.getInput('externalAuthToken');
@@ -116,7 +124,13 @@ export class Task {
           tl.warning(`Registry ${registry} was not in the externals list so not logging in!`);
           continue;
         }
-        let args = ['login', '--registry', registry, `Bearer ${authToken}`];
+
+        const args = ['login', '--registry', registry];
+        if (useNightly) {
+          args.unshift('+nightly')
+          args.push('-Z', 'registry-auth');
+        }
+        args.push(`Bearer ${authToken}`);
         throwIfErr(tl.execSync('cargo', args));
       }
     } catch (err: any) {
