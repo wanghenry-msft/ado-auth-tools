@@ -20,4 +20,3 @@ steps:
 - publish: $(Build.ArtifactsStagingDirectory)
   artifact: extension
   displayName: 'Publish extension file to ADO pipeline storage'
-    Write-Output "vsix_path=$($res.path)" >> $env:GITHUB_OUTPUT
