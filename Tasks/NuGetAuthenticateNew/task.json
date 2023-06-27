@@ -1,0 +1,69 @@
+{
+    "$schema": "https://raw.githubusercontent.com/Microsoft/azure-pipelines-task-lib/master/tasks.schema.json",
+    "id": "da51adca-1510-11ee-9767-135e921b8cfd",
+    "name": "NuGetAuthenticateNew",
+    "friendlyName": "New NuGet authenticator",
+    "description": "Uses external/system access tokens to authenticate to nuget",
+    "helpMarkDown": "",
+    "category": "Utility",
+    "author": "Henry Wang <wanghenry@microsoft.com>",
+    "version": {
+        "Major": 0,
+        "Minor": 1,
+        "Patch": 0
+    },
+    "instanceNameFormat": "Authenticate NuGet",
+    "inputs": [
+        {
+            "name": "configFile",
+            "type": "string",
+            "label": "nuget config file",
+            "required": false,
+            "helpMarkDown": "Specify a nuget config file to read external feed URLs from. This will be used instead of externalFeeds if provided"
+        },
+        {
+            "name": "externalFeeds",
+            "type": "boolean",
+            "label": "comma separated list of feeds",
+            "defaultValue": false,
+            "required": false,
+            "helpMarkDown": "Specify a comma-separated list of external url feeds to authenticate to"
+        },
+        {
+            "name": "externalAuthToken",
+            "type": "string",
+            "label": "Authentication token for external feeds",
+            "helpMarkDown": "This may be omitted if you know that there are no external feeds that need to be authenticated. Otherwise, when omitted, any registries that aren't in our own organization will not be authenticated.",
+            "required": false
+        },
+        {
+            "name": "externalOrganizations",
+            "type": "string",
+            "label": "External organization list",
+            "required": false,
+            "helpMarkDown": "Comma-delimited list of external organizations that should be authenticated using our externalAuthToken. Any organizations not listed here will not be authenticated",
+            "groupName": "advanced"
+        },
+        {
+            "name": "internalOrganization",
+            "type": "string",
+            "label": "Internal organization",
+            "required": false,
+            "helpMarkDown": "The organization that should be denoted as the 'internal' organization, i.e. should use the system access token by default.",
+            "groupName": "advanced"
+        },
+        {
+            "name": "ignoreOrganizations",
+            "type": "string",
+            "label": "Ignore organization list",
+            "required": false,
+            "helpMarkDown": "Comma-delimited list of organizations that should not be authenticated to at all. This also suppresses warnings for these organization if we weren't normally able to authenticate to it due to the external* inputs",
+            "groupName": "advanced"
+        }
+    ],
+    "execution": {
+        "Node": {
+            "target": "index.js"
+        }
+    }
+}

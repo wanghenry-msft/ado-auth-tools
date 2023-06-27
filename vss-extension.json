@@ -2,7 +2,7 @@
     "manifestVersion": 1,
     "id": "ado-auth-tools",
     "name": "ADO Authentication Tools",
-    "version": "0.2.1",
+    "version": "0.2.2",
     "publisher": "MSFT-MORSE",
     "targets": [
         {
@@ -22,6 +22,9 @@
         },
         {
             "path": "Tasks/CargoAuthNew"
+        },
+        {
+            "path": "Tasks/NuGetAuthenticateNew"
         }
     ],
     "contributions": [
@@ -43,6 +46,16 @@
             ],
             "properties": {
                 "name": "Tasks/CargoAuthNew"
+            }
+        },
+        {
+            "id": "nuget-accesstoken-auth-task",
+            "type": "ms.vss-distributed-task.task",
+            "targets": [
+                "ms.vss-distributed-task.tasks"
+            ],
+            "properties": {
+                "name": "Tasks/NuGetAuthenticateNew"
             }
         }
     ]
