@@ -15,21 +15,6 @@
     "instanceNameFormat": "Authenticate NuGet",
     "inputs": [
         {
-            "name": "configFile",
-            "type": "string",
-            "label": "nuget config file",
-            "required": false,
-            "helpMarkDown": "Specify a nuget config file to read external feed URLs from. This will be used instead of externalFeeds if provided"
-        },
-        {
-            "name": "externalFeeds",
-            "type": "boolean",
-            "label": "comma separated list of feeds",
-            "defaultValue": false,
-            "required": false,
-            "helpMarkDown": "Specify a comma-separated list of external url feeds to authenticate to"
-        },
-        {
             "name": "externalAuthToken",
             "type": "string",
             "label": "Authentication token for external feeds",
@@ -41,8 +26,7 @@
             "type": "string",
             "label": "External organization list",
             "required": false,
-            "helpMarkDown": "Comma-delimited list of external organizations that should be authenticated using our externalAuthToken. Any organizations not listed here will not be authenticated",
-            "groupName": "advanced"
+            "helpMarkDown": "Comma-delimited list of external organizations that should be authenticated using our externalAuthToken. Any organizations not listed here will not be authenticated"
         },
         {
             "name": "internalOrganization",

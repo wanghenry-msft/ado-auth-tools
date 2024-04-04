@@ -14,6 +14,26 @@ async function main(): Promise<void> {
     forceReinstallCredentialProvider = tl.getBoolInput('forceReinstallCredentialProvider', false);
     await installCredProviderToUserProfile(forceReinstallCredentialProvider);
 
+    if (tl.getInput('configFile', false)) {
+      tl.setResult(tl.TaskResult.Failed, "Does not support configFile option");
+      return;
+    }
+
+    if (tl.getInput('externalOrganizations', false)) {
+      tl.setResult(tl.TaskResult.Failed, "Does not support externalOrganizations option");
+      return;
+    }
+
+    if (tl.getInput('internalOrganization', false)) {
+      tl.setResult(tl.TaskResult.Failed, "Does not support internalOrganization option");
+      return;
+    }
+
+    if (tl.getInput('ignoreOrganizations', false)) {
+      tl.setResult(tl.TaskResult.Failed, "Does not support ignoreOrganizations option");
+      return;
+    }
+
     // Configure the credential provider for both same-organization feeds and service connections
     const urls = (tl.getInput('externalFeeds', false) || '').split(',');
     const serviceConnections: ServiceConnection[] = [];
