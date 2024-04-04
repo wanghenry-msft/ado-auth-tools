@@ -18,7 +18,20 @@ def build(cwd):
     externals = make_data.get('externals', {})
     for pkg in externals.get('archivePackages', []):
         zf = zipfile.ZipFile(io.BytesIO(requests.get(pkg['url']).content))
-        zf.extractall(path=cwd + '/' + pkg['dest'])
+        for member in zf.filelist:
+            bad = False
+            for c in member.filename:
+                if c in ' #^[]<>?%':
+                    print(f'WARN: ignoring {member.filename} because it ' + \
+                        'contains a disallowed character.')
+                    bad = True
+                    break
+            if bad: continue
+            if member.filename.endswith('.'):
+                print(f'WARN: ignoring {member.filename} because it ended with a period')
+                continue
+
+            zf.extract(member, path=cwd + '/' + pkg['dest'])
 
 def test(cwd):
     check_call(['mocha', 'tests/_suite.js'], cwd=cwd)
