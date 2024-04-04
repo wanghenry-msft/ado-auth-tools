@@ -39,7 +39,7 @@ async function main(): Promise<void> {
     const serviceConnections: ServiceConnection[] = [];
     if (urls.length > 0) {
       const extnAuth = tl.getInputRequired('externalAuthToken');
-      for (const url in urls) {
+      for (const url of urls) {
         serviceConnections.push(new TokenServiceConnection(
           {
             uri: url
