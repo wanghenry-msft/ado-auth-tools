@@ -5,15 +5,13 @@ pool:
   vmImage: ubuntu-latest
 
 steps:
-- bash: ./foreach yarn install --non-interactive
-  displayName: Installing dependencies
-- bash: ./foreach yarn tsc
-  displayName: Compile typescript
+- bash: ./make.py build
+  displayName: Building tasks
 - bash: npm i mocha -g
   displayName: Install mocha
 - bash: npm i -g tfx-cli
   displayName: Install tfx CLI
-- bash: ./foreach mocha tests/_suite.js
+- bash: ./make.py test
   displayName: Run tests
 - powershell: |
     $res = tfx extension create --manifest-globs ./vss-extension.json --json | ConvertFrom-Json

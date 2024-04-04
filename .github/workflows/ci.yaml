@@ -15,14 +15,12 @@ jobs:
         node-version: 'latest'
         cache: 'yarn'
         cache-dependency-path: '**/yarn.lock'
-    - name: Installing dependencies
-      run: ./foreach yarn install --non-interactive
-    - name: Compile typescript
-      run: ./foreach yarn tsc
+    - name: Building tasks
+      run: ./make.py build
     - name: Install mocha
       run: npm i mocha -g
     - name: Run tests
-      run: ./foreach mocha tests/_suite.js
+      run: ./make.py test
       env:
         TASK_TEST_TRACE: '1'
     - name: Install tfx CLI
