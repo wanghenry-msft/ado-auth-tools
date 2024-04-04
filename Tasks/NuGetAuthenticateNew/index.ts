@@ -37,7 +37,7 @@ async function main(): Promise<void> {
     // Configure the credential provider for both same-organization feeds and service connections
     const urls = (tl.getInput('externalFeeds', false) || '').split(',');
     const serviceConnections: ServiceConnection[] = [];
-    if (serviceConnections.length > 0) {
+    if (urls.length > 0) {
       const extnAuth = tl.getInputRequired('externalAuthToken');
       for (const url in urls) {
         serviceConnections.push(new TokenServiceConnection(
